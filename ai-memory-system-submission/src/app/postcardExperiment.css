@@ -1,0 +1,2210 @@
+body {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.44), transparent 36%),
+    linear-gradient(115deg, #d7d2c8 0%, #ece8df 48%, #c7c0b4 100%);
+}
+
+/* Back is a small deck of actual postcards: preview first, then a card's routes. */
+.back-preview-stage,
+.back-anchor-stage,
+.back-deck-stage { width: min(100%, 1040px); margin: 0 auto; }
+
+.back-preview-stage { display: grid; justify-items: center; gap: 28px; padding: 34px 0 20px; }
+
+.back-preview-card {
+  width: min(100%, 620px); min-height: 420px; padding: 44px 48px 38px;
+  border: 1px solid rgba(86, 93, 100, 0.32); color: #363a3e;
+  background: linear-gradient(90deg, transparent 0, transparent 42px, rgba(127, 101, 72, 0.12) 42px, rgba(127, 101, 72, 0.12) 43px, transparent 43px), repeating-linear-gradient(0deg, rgba(86, 93, 100, 0.06) 0, rgba(86, 93, 100, 0.06) 1px, transparent 1px, transparent 30px), #fbfaf5;
+  box-shadow: 0 18px 42px rgba(53, 48, 40, 0.12); text-align: left; transform: rotate(-0.35deg);
+}
+
+.back-preview-card.is-pending { border-color: rgba(153, 116, 70, 0.44); color: #5d5140; background-color: #fbf7ec; }
+.back-preview-card.is-return { border-color: rgba(77, 105, 137, 0.42); }
+.back-preview-card:hover { transform: translateY(-3px) rotate(-0.35deg); }
+
+.back-preview-head,
+.back-anchor-meta,
+.back-deck-meta { display: flex; align-items: center; justify-content: space-between; gap: 18px; color: #85817a; font-size: 0.83rem; letter-spacing: 0.06em; }
+
+.back-preview-status,
+.back-postcard-stamp,
+.back-empty-stamp { display: inline-flex; align-items: center; width: fit-content; padding: 4px 10px; border: 1px solid currentColor; color: #53769d; font-size: 0.8rem; letter-spacing: 0.08em; transform: rotate(-4deg); }
+.is-pending .back-preview-status,
+.back-postcard-stamp.is-pending { color: #a07c45; }
+
+.back-preview-kicker,
+.back-anchor-kicker,
+.back-deck-kicker { margin: 64px 0 16px; color: #58799c; font-size: 0.95rem; }
+.back-preview-card h2,
+.back-anchor-title,
+.back-deck-title { margin: 0; font-family: var(--display-font); font-size: clamp(1.9rem, 4vw, 3rem); font-weight: 500; letter-spacing: -0.05em; }
+
+.back-preview-raw { display: block; width: 100%; margin: 34px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid rgba(86, 93, 100, 0.22); color: inherit; background: transparent; font: inherit; font-size: 1.05rem; line-height: 1.9; text-align: left; white-space: pre-wrap; }
+.back-preview-footer { display: flex; justify-content: space-between; align-items: end; gap: 14px; margin-top: 42px; }
+.back-preview-hint { color: #959087; font-size: 0.85rem; }
+
+.back-preview-actions,
+.back-anchor-actions,
+.back-deck-actions,
+.back-pending-actions,
+.back-card-switcher { display: flex; align-items: center; gap: 14px; }
+
+.back-text-button,
+.back-primary-button,
+.back-quiet-button,
+.back-pending-actions button,
+.back-deck-more,
+.back-route-row button,
+.back-afterglow-toggle,
+.back-card-image,
+.back-deck-card { appearance: none; border: 0; color: inherit; background: none; font: inherit; cursor: pointer; }
+.back-primary-button { padding: 8px 0; border-bottom: 1px solid currentColor; color: #456b95; }
+.back-quiet-button,
+.back-text-button { padding: 8px 0; color: #8a857c; }
+.back-text-button:hover,
+.back-quiet-button:hover,
+.back-route-row button:hover,
+.back-primary-button:hover,
+.back-afterglow-toggle:hover { opacity: 0.68; }
+
+.back-card-switcher { justify-content: center; color: #8f8a82; font-size: 0.88rem; }
+.back-card-switcher button { width: 34px; height: 34px; border: 0; color: #65625c; background: transparent; font: inherit; font-size: 1.25rem; cursor: pointer; }
+.back-card-switcher button:disabled { color: #d6d0c5; cursor: default; }
+
+.back-anchor-stage,
+.back-deck-stage { display: grid; gap: 24px; padding: 30px 0 20px; }
+.back-anchor-postcard,
+.back-deck-postcard { min-height: 600px; animation: none; }
+.back-anchor-postcard.is-pending,
+.back-deck-postcard.is-pending { border-color: rgba(153, 116, 70, 0.52); }
+.back-anchor-postcard .receipt-postcard-annotation,
+.back-deck-postcard .receipt-postcard-annotation { display: flex; flex-direction: column; justify-content: space-between; min-height: 520px; }
+.back-anchor-kicker,
+.back-deck-kicker { margin: 52px 0 13px; }
+.back-anchor-title,
+.back-deck-title { max-width: 300px; font-size: clamp(1.65rem, 3.2vw, 2.45rem); }
+.back-postcard-stamp { margin-top: 24px; }
+.back-anchor-raw,
+.back-deck-raw { display: grid; align-content: space-between; gap: 26px; min-height: 520px; }
+.back-anchor-raw button,
+.back-deck-raw button { text-align: left; }
+.back-raw-text { width: 100%; padding: 0; color: #45423d; font: inherit; font-size: clamp(1.05rem, 1.9vw, 1.28rem); line-height: 1.85; white-space: pre-wrap; }
+.back-card-image { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 150px; overflow: hidden; border: 1px solid rgba(86, 93, 100, 0.16); background: #eee9df; }
+.back-card-image img { display: block; width: 100%; max-height: 225px; object-fit: cover; }
+
+.back-afterglow-toggle { display: grid; gap: 8px; width: 100%; padding: 16px 0; border-top: 1px solid rgba(86, 93, 100, 0.18); border-bottom: 1px solid rgba(86, 93, 100, 0.18); color: #65615a; text-align: left; }
+.back-afterglow-toggle span { color: #6580a0; font-size: 0.88rem; }
+.back-afterglow-toggle p { display: -webkit-box; margin: 0; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-height: 1.7; }
+.back-afterglow-toggle.is-open p { display: block; }
+
+.back-route-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; margin-top: 6px; }
+.back-route-row { border-top: 1px solid rgba(86, 93, 100, 0.15); }
+.back-route-row button { display: grid; gap: 4px; width: 100%; padding: 13px 0 12px; color: #5e5a54; text-align: left; }
+.back-route-row span { color: #6281a4; font-size: 0.82rem; }
+.back-route-row strong { font-weight: 400; line-height: 1.45; }
+
+.back-anchor-footer,
+.back-deck-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 18px; border-top: 1px solid rgba(86, 93, 100, 0.18); }
+.back-pending-actions { flex-wrap: wrap; gap: 8px 16px; }
+.back-pending-actions button { padding: 0; color: #8b6a39; font-size: 0.9rem; }
+.back-pending-actions button:first-child { border-bottom: 1px solid currentColor; }
+.back-deck-stage { justify-items: center; }
+.back-deck-path { margin: 0; color: #817c73; font-size: 0.9rem; }
+.back-deck-card { width: min(100%, 780px); }
+.back-deck-meta { display: grid; grid-template-columns: auto 1fr auto; align-items: center; }
+.back-deck-meta button { justify-self: center; }
+.back-deck-footer { align-items: flex-start; }
+.back-deck-actions { flex-wrap: wrap; justify-content: flex-end; gap: 8px 16px; }
+.back-deck-more { padding: 8px 0; color: #817c73; letter-spacing: 0.12em; }
+
+.back-empty-deck { display: grid; justify-items: center; gap: 18px; min-height: 330px; padding: 86px 30px; border: 1px solid rgba(86, 93, 100, 0.22); background: rgba(251, 250, 245, 0.72); text-align: center; }
+.back-empty-deck h2 { margin: 0; font-family: var(--display-font); font-size: 1.7rem; font-weight: 500; }
+.back-empty-deck p { margin: 0; color: #777269; line-height: 1.7; }
+
+.back-notice { position: fixed; z-index: 20; bottom: 30px; left: 50%; padding: 10px 15px; color: #59554e; background: #fbfaf5; box-shadow: 0 8px 24px rgba(48, 43, 35, 0.15); transform: translateX(-50%); }
+.back-reading-focus,
+.back-image-viewer,
+.back-route-dialog { position: fixed; z-index: 30; inset: 0; display: grid; place-items: center; padding: 22px; }
+.back-reading-focus > button,
+.back-image-viewer > button,
+.back-route-dialog > button { position: absolute; inset: 0; border: 0; background: rgba(34, 34, 31, 0.48); cursor: pointer; }
+.back-reading-paper,
+.back-route-dialog-card { position: relative; z-index: 1; width: min(100%, 640px); max-height: min(760px, calc(100vh - 44px)); overflow: auto; padding: 46px; background: #fbfaf5; box-shadow: 0 24px 64px rgba(25, 24, 21, 0.28); }
+.back-reading-paper p { margin: 32px 0 0; color: #403d38; font-size: clamp(1.15rem, 2.3vw, 1.45rem); line-height: 2; white-space: pre-wrap; }
+.back-reading-paper button,
+.back-image-frame button,
+.back-route-dialog-card button { padding: 0; border: 0; color: #5d789a; background: transparent; font: inherit; cursor: pointer; }
+.back-image-frame { position: relative; z-index: 1; width: min(100%, 900px); max-height: calc(100vh - 44px); padding: 38px; background: #fbfaf5; box-shadow: 0 24px 64px rgba(25, 24, 21, 0.28); }
+.back-image-frame img { display: block; width: 100%; max-height: calc(100vh - 140px); object-fit: contain; }
+.back-image-frame button { margin-bottom: 16px; }
+.back-route-dialog-card { display: grid; gap: 18px; width: min(100%, 440px); }
+.back-route-dialog-card h2,
+.back-route-dialog-card p { margin: 0; }
+.back-route-dialog-card p { color: #777269; line-height: 1.7; }
+.back-route-dialog-actions { display: flex; gap: 22px; margin-top: 10px; }
+
+@media (max-width: 720px) {
+  .back-preview-stage,
+  .back-anchor-stage,
+  .back-deck-stage { width: 100%; }
+  .back-preview-card { min-height: 380px; padding: 30px 28px; }
+  .back-preview-kicker { margin-top: 45px; }
+  .back-preview-footer,
+  .back-anchor-footer,
+  .back-deck-footer { align-items: flex-start; flex-direction: column; }
+  .back-preview-actions,
+  .back-anchor-actions,
+  .back-deck-actions { align-items: flex-start; flex-direction: column; }
+  .back-anchor-postcard .receipt-postcard-annotation,
+  .back-deck-postcard .receipt-postcard-annotation,
+  .back-anchor-raw,
+  .back-deck-raw { min-height: auto; }
+  .back-route-list { grid-template-columns: 1fr; }
+  .back-reading-paper,
+  .back-route-dialog-card,
+  .back-image-frame { padding: 28px 24px; }
+}
+
+.postcard-experiment {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  padding: 48px 24px 30px;
+}
+
+.record-slip-stage {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 18px;
+  min-height: min(680px, calc(100vh - 96px));
+  width: 100%;
+}
+
+.record-slip-top-actions {
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  animation: record-actions-arrive 1920ms steps(1, end) both;
+}
+
+.record-slip-top-actions button {
+  border: 0;
+  background: transparent;
+  color: rgba(37, 31, 25, 0.38);
+  cursor: default;
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 13px;
+  letter-spacing: 0;
+  padding: 2px 4px;
+}
+
+.record-slip {
+  position: relative;
+  display: block;
+  width: min(560px, calc(100vw - 56px));
+  min-height: 390px;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.62), transparent 38%),
+    repeating-linear-gradient(7deg, rgba(95, 82, 66, 0.035) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(92deg, rgba(95, 82, 66, 0.024) 0 1px, transparent 1px 13px),
+    #f8f5ec;
+  box-shadow:
+    0 28px 48px rgba(70, 62, 52, 0.18),
+    0 7px 16px rgba(70, 62, 52, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  clip-path: polygon(
+    1.4% 4.5%,
+    8.5% 2.2%,
+    17% 3.6%,
+    25% 1.2%,
+    36% 3.1%,
+    48% 1.7%,
+    61% 3.8%,
+    72% 1.5%,
+    84% 3.4%,
+    98.2% 2.3%,
+    96.5% 14%,
+    98.8% 27%,
+    96.9% 41%,
+    98.4% 54%,
+    96.2% 69%,
+    98% 84%,
+    95.8% 97%,
+    83% 95.5%,
+    71% 98.5%,
+    58% 96.7%,
+    44% 98.3%,
+    32% 96.4%,
+    21% 98.2%,
+    10% 96.1%,
+    2.2% 98%,
+    3.8% 84%,
+    1.6% 70%,
+    3.2% 57%,
+    1.1% 43%,
+    3.4% 29%,
+    1.8% 16%
+  );
+  padding: 46px 42px 38px;
+  transform: rotate(-2.2deg);
+  transform-origin: 52% 62%;
+  animation: postcard-clumsy-arrival 1920ms steps(1, end) both;
+}
+
+.record-slip::before,
+.record-slip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.record-slip::before {
+  background:
+    radial-gradient(circle at 24% 22%, rgba(94, 80, 63, 0.055), transparent 1.2px),
+    radial-gradient(circle at 74% 36%, rgba(94, 80, 63, 0.045), transparent 1px),
+    radial-gradient(circle at 42% 78%, rgba(94, 80, 63, 0.04), transparent 1.3px);
+  background-size: 38px 42px, 52px 46px, 44px 50px;
+  mix-blend-mode: multiply;
+  opacity: 0.75;
+}
+
+.record-slip::after {
+  inset: 8px;
+  border: 1px solid rgba(98, 86, 70, 0.045);
+  clip-path: inherit;
+}
+
+.record-slip textarea {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  min-height: 304px;
+  overflow-y: auto;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: rgba(37, 31, 25, 0.76);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif !important;
+  font-size: 15px;
+  line-height: 1.76;
+  letter-spacing: 0;
+  padding: 0;
+  resize: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(98, 86, 70, 0.14) transparent;
+}
+
+.record-leave-button {
+  border: 0;
+  background: transparent;
+  color: rgba(166, 48, 42, 0.58);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 15px;
+  letter-spacing: 0;
+  opacity: 0;
+  padding: 2px 4px;
+  animation: record-actions-arrive 1920ms steps(1, end) both;
+}
+
+.record-leave-button:focus-visible {
+  outline: 0;
+  color: rgba(166, 48, 42, 0.78);
+}
+
+.record-slip textarea:focus,
+.record-slip textarea:focus-visible {
+  outline: 0;
+  box-shadow: none;
+}
+
+.record-slip textarea::selection {
+  background: rgba(98, 86, 70, 0.12);
+}
+
+.record-slip textarea::placeholder {
+  color: rgba(37, 31, 25, 0.26);
+}
+
+.record-to-receipt-stage {
+  position: relative;
+  display: grid;
+  min-height: min(680px, calc(100vh - 96px));
+  place-items: center;
+  width: min(980px, calc(100vw - 48px));
+}
+
+.transition-postcard {
+  --ruled-line: 28px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) 34px minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 34px);
+  width: min(920px, calc(100vw - 48px));
+  min-height: 438px;
+  border: 1px solid rgba(59, 50, 42, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), transparent 34%),
+    repeating-linear-gradient(0deg, rgba(88, 74, 61, 0.026) 0 1px, transparent 1px 8px),
+    #fbfaf5;
+  box-shadow:
+    0 24px 52px rgba(58, 49, 40, 0.22),
+    0 5px 12px rgba(58, 49, 40, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  opacity: 0;
+  padding: clamp(32px, 4vw, 48px);
+  transform-origin: 52% 56%;
+  animation: postcard-emerges-behind 5200ms steps(1, end) both;
+}
+
+.transition-slip {
+  position: absolute;
+  z-index: 2;
+  width: min(560px, calc(100vw - 56px));
+  min-height: 390px;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.62), transparent 38%),
+    repeating-linear-gradient(7deg, rgba(95, 82, 66, 0.035) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(92deg, rgba(95, 82, 66, 0.024) 0 1px, transparent 1px 13px),
+    #f8f5ec;
+  box-shadow:
+    0 28px 48px rgba(70, 62, 52, 0.18),
+    0 7px 16px rgba(70, 62, 52, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  clip-path: polygon(
+    1.4% 4.5%,
+    8.5% 2.2%,
+    17% 3.6%,
+    25% 1.2%,
+    36% 3.1%,
+    48% 1.7%,
+    61% 3.8%,
+    72% 1.5%,
+    84% 3.4%,
+    98.2% 2.3%,
+    96.5% 14%,
+    98.8% 27%,
+    96.9% 41%,
+    98.4% 54%,
+    96.2% 69%,
+    98% 84%,
+    95.8% 97%,
+    83% 95.5%,
+    71% 98.5%,
+    58% 96.7%,
+    44% 98.3%,
+    32% 96.4%,
+    21% 98.2%,
+    10% 96.1%,
+    2.2% 98%,
+    3.8% 84%,
+    1.6% 70%,
+    3.2% 57%,
+    1.1% 43%,
+    3.4% 29%,
+    1.8% 16%
+  );
+  color: rgba(37, 31, 25, 0.76);
+  padding: 46px 42px 38px;
+  transform-origin: 52% 62%;
+  animation: note-slip-received 5200ms steps(1, end) both;
+}
+
+.transition-slip p {
+  margin: 0;
+  max-height: 304px;
+  overflow: hidden;
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 15px;
+  line-height: 1.76;
+  white-space: pre-wrap;
+}
+
+.transition-annotation {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  opacity: 0;
+  padding-top: 6px;
+  animation: annotation-arrives 5200ms steps(1, end) both;
+}
+
+.transition-annotation div {
+  display: grid;
+  gap: 7px;
+}
+
+.transition-annotation span {
+  color: rgba(166, 48, 42, 0.4);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 12px;
+}
+
+.transition-annotation p {
+  margin: 0;
+  color: rgba(37, 31, 25, 0.5);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.transition-divider {
+  display: grid;
+  place-items: center;
+  align-content: space-between;
+  opacity: 0;
+  padding: 20px 0 18px;
+  animation: postcard-lines-arrive 5200ms steps(1, end) both;
+}
+
+.transition-divider span {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(37, 31, 25, 0.36);
+}
+
+.transition-raw-area {
+  display: grid;
+  grid-template-rows: 80px minmax(0, 1fr) 28px;
+  min-width: 0;
+}
+
+.transition-stamp-box {
+  justify-self: end;
+  width: 86px;
+  height: 68px;
+  border: 1px solid rgba(166, 48, 42, 0.42);
+  opacity: 0;
+  animation: annotation-arrives 5200ms steps(1, end) both;
+}
+
+.transition-raw-area p {
+  min-height: 224px;
+  margin: 0;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--ruled-line) - 1px),
+      rgba(166, 48, 42, 0.24) calc(var(--ruled-line) - 1px),
+      rgba(166, 48, 42, 0.24) var(--ruled-line)
+    );
+  color: rgba(33, 29, 25, 0.78);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 15px;
+  line-height: var(--ruled-line);
+  opacity: 0;
+  padding: 0 2px;
+  white-space: pre-wrap;
+  animation: rawtext-settles 5200ms steps(1, end) both;
+}
+
+.transition-zip-row {
+  align-self: end;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  animation: postcard-lines-arrive 5200ms steps(1, end) both;
+}
+
+.transition-zip-row span {
+  width: 20px;
+  height: 22px;
+  border: 1px solid rgba(186, 35, 32, 0.42);
+}
+
+.received-stamp {
+  position: absolute;
+  left: 50px;
+  bottom: 42px;
+  border: 1px solid rgba(166, 48, 42, 0.34);
+  border-radius: 999px;
+  color: rgba(166, 48, 42, 0.42);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 12px;
+  opacity: 0;
+  padding: 7px 14px;
+  transform: rotate(-5deg);
+  animation: received-stamp 5200ms steps(1, end) both;
+}
+
+@keyframes record-actions-arrive {
+  0%,
+  78% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0.42;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes note-slip-received {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(-2.2deg) scale(1);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translate3d(0, -8px, 0) rotate(1deg) scale(1.02);
+  }
+
+  22% {
+    opacity: 1;
+    transform: translate3d(-8px, -12px, 0) rotate(-1deg) scale(1.01);
+  }
+
+  34% {
+    opacity: 1;
+    transform: translate3d(7px, -10px, 0) rotate(1.4deg) scale(1.01);
+  }
+
+  46% {
+    opacity: 1;
+    transform: translate3d(0, -10px, 0) rotate(0deg) scale(1);
+  }
+
+  48% {
+    opacity: 0.82;
+    transform: translate3d(126px, 2px, 0) rotate(0.5deg) scale(0.86);
+  }
+
+  62% {
+    opacity: 0.28;
+    transform: translate3d(212px, 16px, 0) rotate(0deg) scale(0.62);
+  }
+
+  74%,
+  100% {
+    opacity: 0;
+    transform: translate3d(230px, 18px, 0) rotate(0deg) scale(0.58);
+  }
+}
+
+@keyframes postcard-emerges-behind {
+  0%,
+  34% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) rotate(-1deg) scale(0.94);
+  }
+
+  46% {
+    opacity: 0.5;
+    transform: translate3d(-4px, 5px, 0) rotate(1deg) scale(0.965);
+  }
+
+  58% {
+    opacity: 0.78;
+    transform: translate3d(4px, 2px, 0) rotate(-0.5deg) scale(0.985);
+  }
+
+  70%,
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes postcard-lines-arrive {
+  0%,
+  24% {
+    opacity: 0;
+  }
+
+  34% {
+    opacity: 0.42;
+  }
+
+  44%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rawtext-settles {
+  0%,
+  30% {
+    opacity: 0;
+    transform: translate3d(-8px, -4px, 0);
+  }
+
+  40% {
+    opacity: 0.52;
+    transform: translate3d(2px, 0, 0);
+  }
+
+  50%,
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes annotation-arrives {
+  0%,
+  82% {
+    opacity: 0;
+  }
+
+  92% {
+    opacity: 0.46;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes received-stamp {
+  0%,
+  88% {
+    opacity: 0;
+    transform: rotate(-7deg) scale(1.08);
+  }
+
+  96% {
+    opacity: 0.48;
+    transform: rotate(-4deg) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(-5deg) scale(1);
+  }
+}
+
+.receipt-postcard-stack {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.receipt-postcard-stack.is-mailing .receipt-top-actions,
+.receipt-postcard-stack.is-mailing .receipt-bottom-actions {
+  pointer-events: none;
+  animation: mailing-actions-quiet 360ms steps(2, end) both;
+}
+
+.mailing-sequence {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(920px, calc(100vw - 48px));
+  min-height: 438px;
+}
+
+.mailing-postcard-layer {
+  position: relative;
+  z-index: 4;
+  transform-origin: 50% 64%;
+}
+
+.mailing-sequence.is-active {
+  min-height: 580px;
+}
+
+.mailing-sequence.is-active .mailing-postcard-layer {
+  animation: postcard-into-envelope 6400ms cubic-bezier(0.42, 0, 0.28, 1) both;
+}
+
+.mailing-envelope {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 118px);
+  z-index: 3;
+  width: min(610px, calc(100vw - 64px));
+  aspect-ratio: 1.816;
+  pointer-events: none;
+  transform: translate3d(-50%, 360px, 0) rotate(0.6deg);
+  transform-origin: 50% 74%;
+  animation: envelope-mailing-body 6400ms steps(1, end) both;
+}
+
+.mailing-envelope-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  filter: drop-shadow(0 18px 20px rgba(65, 53, 43, 0.13));
+}
+
+.mailing-envelope-frame-closed {
+  animation: envelope-frame-closed 6400ms steps(1, end) both;
+}
+
+.mailing-envelope-frame-open {
+  height: 133%;
+  top: -44%;
+  animation: envelope-frame-open 6400ms steps(1, end) both;
+}
+
+.mailing-envelope-frame-half {
+  animation: envelope-frame-half 6400ms steps(1, end) both;
+}
+
+.mailing-envelope-back,
+.mailing-envelope-front,
+.mailing-envelope-flap,
+.mailing-envelope-mouth {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.mailing-envelope-back {
+  top: 27%;
+  z-index: 1;
+  height: 63%;
+  border: 1px solid rgba(68, 54, 42, 0.08);
+  background:
+    linear-gradient(130deg, rgba(255, 255, 255, 0.24), transparent 44%),
+    repeating-linear-gradient(8deg, rgba(94, 77, 58, 0.035) 0 1px, transparent 1px 10px),
+    rgba(238, 228, 213, 0.62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.46);
+  clip-path: polygon(1% 9%, 8% 2%, 21% 4%, 36% 1%, 52% 4%, 67% 2%, 83% 5%, 98% 2%, 99% 96%, 3% 98%);
+}
+
+.mailing-envelope-mouth {
+  top: 32%;
+  z-index: 7;
+  height: 22%;
+  background:
+    linear-gradient(180deg, rgba(70, 54, 38, 0.18), rgba(86, 68, 49, 0.02) 48%, transparent),
+    rgba(216, 203, 184, 0.28);
+  clip-path: polygon(6% 0, 50% 72%, 94% 0, 98% 38%, 50% 96%, 2% 38%);
+  opacity: 0;
+  animation: envelope-mouth-open 6400ms steps(1, end) both;
+}
+
+.mailing-envelope-flap {
+  display: none;
+}
+
+.mailing-envelope-front {
+  top: 42%;
+  z-index: 8;
+  height: 47%;
+  border: 1px solid rgba(68, 54, 42, 0.04);
+  background:
+    linear-gradient(44deg, transparent 49.4%, rgba(116, 92, 67, 0.06) 50%, transparent 50.6%),
+    linear-gradient(136deg, transparent 49.4%, rgba(116, 92, 67, 0.05) 50%, transparent 50.6%),
+    linear-gradient(180deg, rgba(239, 229, 214, 0.34) 0%, rgba(231, 218, 200, 0.38) 100%);
+  clip-path: polygon(2% 0, 50% 62%, 98% 0, 99% 95%, 90% 98%, 70% 96%, 51% 99%, 31% 96%, 12% 98%, 1% 95%);
+  opacity: 0;
+  animation: envelope-front-mask 6400ms steps(1, end) both;
+}
+
+.mailing-envelope-stamp {
+  position: absolute;
+  right: 44px;
+  bottom: 50px;
+  z-index: 8;
+  border: 1px solid rgba(166, 48, 42, 0.28);
+  border-radius: 999px;
+  color: rgba(166, 48, 42, 0.34);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 11px;
+  letter-spacing: 0;
+  opacity: 0;
+  padding: 6px 13px;
+  transform: rotate(-7deg);
+  animation: mailing-stamp-arrives 6400ms steps(1, end) both;
+}
+
+.receipt-top-actions,
+.receipt-bottom-actions,
+.record-send-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.receipt-top-actions {
+  margin-bottom: 34px;
+}
+
+.receipt-bottom-actions {
+  margin-top: 2px;
+}
+
+.record-send-action {
+  margin-top: 4px;
+}
+
+.receipt-top-actions button,
+.receipt-bottom-actions button,
+.record-send-action button {
+  border: 0;
+  background: transparent;
+  color: rgba(37, 31, 25, 0.48);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 13px;
+  letter-spacing: 0;
+  padding: 2px 4px;
+}
+
+.receipt-bottom-actions button {
+  color: rgba(37, 31, 25, 0.42);
+  font-size: 14px;
+}
+
+.receipt-top-actions button:disabled {
+  cursor: default;
+  color: rgba(37, 31, 25, 0.24);
+}
+
+.receipt-bottom-actions button:disabled {
+  cursor: default;
+  color: rgba(37, 31, 25, 0.24);
+}
+
+.record-send-action button {
+  color: rgba(166, 48, 42, 0.58);
+  font-size: 15px;
+}
+
+.receipt-top-actions button:focus-visible,
+.receipt-bottom-actions button:focus-visible,
+.record-send-action button:focus-visible {
+  outline: 0;
+  color: rgba(37, 31, 25, 0.7);
+}
+
+.receipt-postcard {
+  --ruled-line: 28px;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) 34px minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 34px);
+  width: min(920px, calc(100vw - 48px));
+  min-height: 438px;
+  border: 1px solid rgba(59, 50, 42, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), transparent 34%),
+    repeating-linear-gradient(0deg, rgba(88, 74, 61, 0.026) 0 1px, transparent 1px 8px),
+    #fbfaf5;
+  box-shadow:
+    0 24px 52px rgba(58, 49, 40, 0.22),
+    0 5px 12px rgba(58, 49, 40, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+  padding: clamp(32px, 4vw, 48px);
+  transform-origin: 52% 62%;
+  animation: postcard-clumsy-arrival 1920ms steps(1, end) both;
+}
+
+.back-stage {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 18px;
+  min-height: min(720px, calc(100vh - 36px));
+  width: min(960px, calc(100vw - 40px));
+}
+
+.back-top-actions,
+.back-anchor-row,
+.back-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.back-top-actions button,
+.back-anchor-row button,
+.back-return-button,
+.back-action-row button {
+  border: 0;
+  background: transparent;
+  color: rgba(37, 31, 25, 0.46);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 13px;
+  letter-spacing: 0;
+  padding: 2px 4px;
+}
+
+.back-top-actions button.active,
+.back-anchor-row button.active,
+.back-return-button {
+  color: rgba(166, 48, 42, 0.64);
+}
+
+.back-anchor-row {
+  max-width: 720px;
+}
+
+.back-anchor-row button {
+  border: 1px solid rgba(37, 31, 25, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  padding: 6px 10px;
+}
+
+.back-anchor-row button.active {
+  border-color: rgba(166, 48, 42, 0.28);
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.back-entry-panel {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.back-entry-text {
+  display: block;
+  width: min(560px, calc(100vw - 56px));
+}
+
+.back-entry-text textarea {
+  display: block;
+  width: 100%;
+  min-height: 112px;
+  border: 0;
+  outline: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 27px,
+      rgba(166, 48, 42, 0.18) 28px,
+      transparent 29px
+    );
+  color: rgba(37, 31, 25, 0.68);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif !important;
+  font-size: 15px;
+  line-height: 29px;
+  padding: 0 2px;
+  resize: none;
+}
+
+.back-entry-text textarea::placeholder {
+  color: rgba(37, 31, 25, 0.26);
+}
+
+.back-return-button {
+  font-size: 15px;
+}
+
+.back-asset-deck-button {
+  border: 0;
+  color: rgba(37, 31, 25, 0.4);
+  background: transparent;
+  font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 12px;
+  padding: 2px 4px;
+}
+
+.back-asset-deck-button:hover {
+  color: rgba(166, 48, 42, 0.64);
+}
+
+.back-mailbox {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: min(640px, calc(100vw - 48px));
+}
+
+.back-mailbox-title,
+.back-card-notice {
+  margin: 0;
+  color: rgba(37, 31, 25, 0.46);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 13px;
+}
+
+.back-postcard-card,
+.back-return-space {
+  --back-accent: #5b718d;
+  --back-accent-soft: rgba(91, 113, 141, 0.16);
+  --back-paper: #f4f5f0;
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--back-accent) 42%, transparent);
+  background:
+    linear-gradient(130deg, rgba(255, 255, 255, 0.78), transparent 34%),
+    repeating-linear-gradient(7deg, rgba(64, 56, 48, 0.026) 0 1px, transparent 1px 9px),
+    var(--back-paper);
+  box-shadow:
+    0 24px 48px rgba(58, 49, 40, 0.18),
+    0 5px 12px rgba(58, 49, 40, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.58);
+}
+
+.back-postcard-card {
+  display: grid;
+  gap: 18px;
+  padding: clamp(24px, 4vw, 38px);
+  transition: max-height 220ms ease, box-shadow 220ms ease;
+}
+
+.back-postcard-card.is-pending {
+  --back-accent: #9c7954;
+  --back-accent-soft: rgba(156, 121, 84, 0.16);
+  --back-paper: #f6f0e5;
+}
+
+.back-card-heading,
+.back-card-switcher,
+.back-card-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.back-card-heading {
+  justify-content: space-between;
+  color: rgba(37, 31, 25, 0.42);
+  font-size: 12px;
+}
+
+.back-card-stamp {
+  border: 1px solid var(--back-accent);
+  color: var(--back-accent);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  transform: rotate(-3deg);
+}
+
+.back-card-surface {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.back-card-intro,
+.back-card-expand-hint,
+.back-expanded-label,
+.back-return-kicker,
+.back-return-section > span,
+.back-return-reflection > span,
+.back-card-editor label > span {
+  color: var(--back-accent);
+  font-size: 12px;
+}
+
+.back-card-surface strong,
+.back-return-space h2 {
+  color: rgba(37, 31, 25, 0.76);
+  font-family: "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.back-card-surface blockquote,
+.back-return-section blockquote {
+  min-height: 142px;
+  margin: 0;
+  padding: 4px 2px;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 27px,
+      color-mix(in srgb, var(--back-accent) 32%, transparent) 28px,
+      transparent 29px
+    );
+  color: rgba(33, 29, 25, 0.76);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 15px;
+  line-height: 29px;
+  white-space: pre-wrap;
+}
+
+.back-card-expand-hint {
+  justify-self: end;
+}
+
+.back-card-expanded {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid var(--back-accent-soft);
+  padding-top: 18px;
+}
+
+.back-afterglow,
+.back-pending-question,
+.back-return-section p {
+  margin: 0;
+  color: rgba(37, 31, 25, 0.64);
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.back-pending-question {
+  color: rgba(37, 31, 25, 0.76);
+}
+
+.back-route-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.back-route-row small {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  border-top: 1px solid var(--back-accent-soft);
+  color: rgba(37, 31, 25, 0.7);
+  font-size: 13px;
+  line-height: 1.42;
+  padding-top: 8px;
+}
+
+.back-route-row span {
+  color: var(--back-accent);
+  font-size: 11px;
+}
+
+.back-card-actions button,
+.back-card-switcher button,
+.back-return-close,
+.back-return-save {
+  border: 0;
+  background: transparent;
+  color: var(--back-accent);
+  cursor: pointer;
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 14px;
+  padding: 2px 0;
+}
+
+.back-card-actions button + button {
+  color: rgba(37, 31, 25, 0.48);
+}
+
+.back-card-switcher {
+  justify-content: center;
+  color: rgba(37, 31, 25, 0.38);
+  font-size: 12px;
+}
+
+.back-card-switcher button:disabled {
+  color: rgba(37, 31, 25, 0.2);
+  cursor: default;
+}
+
+.back-card-editor {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--back-accent-soft);
+  padding-top: 18px;
+}
+
+.back-card-editor label,
+.back-return-reflection {
+  display: grid;
+  gap: 8px;
+}
+
+.back-card-editor input,
+.back-card-editor textarea,
+.back-return-reflection textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--back-accent-soft);
+  outline: 0;
+  background: transparent;
+  color: rgba(37, 31, 25, 0.72);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 4px 0;
+}
+
+.back-card-editor textarea,
+.back-return-reflection textarea {
+  min-height: 76px;
+  resize: vertical;
+}
+
+.back-return-space {
+  display: grid;
+  gap: 24px;
+  max-height: min(780px, calc(100vh - 70px));
+  overflow-y: auto;
+  padding: clamp(26px, 5vw, 48px);
+}
+
+.back-return-close {
+  justify-self: end;
+}
+
+.back-return-space h2 {
+  margin: -14px 0 0;
+}
+
+.back-return-section {
+  display: grid;
+  gap: 10px;
+}
+
+.back-return-section blockquote {
+  min-height: 0;
+}
+
+.back-reflection-list {
+  border-left: 1px solid var(--back-accent-soft);
+  padding-left: 14px;
+}
+
+.back-return-save {
+  justify-self: start;
+}
+
+@media (max-width: 720px) {
+  .back-stage {
+    min-height: calc(100vh - 34px);
+    width: min(100%, calc(100vw - 24px));
+  }
+
+  .back-mailbox {
+    width: min(100%, calc(100vw - 24px));
+  }
+
+  .back-postcard-card,
+  .back-return-space {
+    padding: 24px;
+  }
+
+  .back-route-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.receipt-postcard.record-mode {
+  animation: postcard-clumsy-arrival 1920ms steps(1, end) both;
+}
+
+.receipt-postcard.receipt-mode {
+  animation: none;
+}
+
+.receipt-postcard-annotation {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  min-width: 0;
+  padding-top: 6px;
+  z-index: 1;
+}
+
+.receipt-postcard-annotation.record-blank {
+  min-height: 100%;
+}
+
+.editable-paper-field {
+  display: block;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif !important;
+  letter-spacing: 0;
+  padding: 0;
+  resize: none;
+}
+
+.editable-paper-field:focus {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.treasury-entry {
+  display: grid;
+  gap: 7px;
+}
+
+.treasury-entry span {
+  color: rgba(166, 48, 42, 0.4);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.receipt-treasury-field {
+  color: rgba(37, 31, 25, 0.5);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.receipt-date {
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  color: rgba(166, 48, 42, 0.38);
+  font-size: 12px;
+}
+
+.receipt-postcard-divider {
+  display: grid;
+  place-items: center;
+  align-content: space-between;
+  padding: 20px 0 18px;
+  z-index: 1;
+}
+
+.receipt-postcard-divider span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(37, 31, 25, 0.36);
+}
+
+.receipt-postcard-raw {
+  position: relative;
+  display: grid;
+  grid-template-rows: 80px minmax(0, 1fr) 28px;
+  min-width: 0;
+  z-index: 1;
+}
+
+.record-mode .receipt-postcard-raw {
+  grid-template-rows: 80px minmax(280px, 1fr) 28px;
+}
+
+.receipt-stamp-box {
+  justify-self: end;
+  width: 86px;
+  height: 68px;
+  border: 1px solid rgba(166, 48, 42, 0.42);
+  background: transparent;
+}
+
+.ruled-text-area {
+  position: relative;
+  display: block;
+  min-height: 224px;
+  border: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--ruled-line) - 1px),
+      rgba(166, 48, 42, 0.24) calc(var(--ruled-line) - 1px),
+      rgba(166, 48, 42, 0.24) var(--ruled-line)
+    );
+  transition:
+    background-color 160ms ease;
+}
+
+.ruled-text-area:focus-within {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.ruled-text-area textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 224px;
+  overflow-y: auto;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: rgba(33, 29, 25, 0.78);
+  font-family:
+    "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif !important;
+  font-size: 15px;
+  line-height: var(--ruled-line);
+  padding: 0 2px;
+  resize: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(166, 48, 42, 0.18) transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ruled-text-area textarea:focus,
+.ruled-text-area textarea:focus-visible {
+  outline: 0;
+  box-shadow: none;
+}
+
+.ruled-text-area textarea::selection {
+  background: rgba(166, 48, 42, 0.16);
+}
+
+.receipt-zip-row {
+  align-self: end;
+  justify-self: start;
+  display: flex;
+  gap: 8px;
+}
+
+.receipt-zip-row span {
+  width: 20px;
+  height: 22px;
+  border: 1px solid rgba(186, 35, 32, 0.42);
+}
+
+@keyframes postcard-clumsy-arrival {
+  0% {
+    opacity: 0.24;
+    transform: translate3d(-8px, 54px, 0) rotate(-4deg) scale(0.375);
+  }
+
+  12% {
+    opacity: 0.32;
+    transform: translate3d(6px, 49px, 0) rotate(2deg) scale(0.48);
+  }
+
+  24% {
+    opacity: 0.4;
+    transform: translate3d(-4px, 43px, 0) rotate(-2deg) scale(0.62);
+  }
+
+  36% {
+    opacity: 0.46;
+    transform: translate3d(10px, 38px, 0) rotate(5deg) scale(0.82);
+  }
+
+  52% {
+    opacity: 0.64;
+    transform: translate3d(-12px, 25px, 0) rotate(-3deg) scale(0.88);
+  }
+
+  68% {
+    opacity: 0.82;
+    transform: translate3d(8px, 13px, 0) rotate(3deg) scale(0.94);
+  }
+
+  84% {
+    opacity: 0.96;
+    transform: translate3d(-3px, 4px, 0) rotate(-2deg) scale(0.985);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes mailing-actions-quiet {
+  0% {
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 0.34;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes postcard-into-envelope {
+  0%,
+  4% {
+    z-index: 7;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  8% {
+    z-index: 7;
+    transform: translate3d(0, -6px, 0) rotate(-1deg) scale(0.92);
+  }
+
+  11% {
+    z-index: 7;
+    transform: translate3d(1px, -6px, 0) rotate(0.5deg) scale(0.92);
+  }
+
+  15% {
+    z-index: 7;
+    transform: translate3d(0, -6px, 0) rotate(0deg) scale(0.92);
+  }
+
+  23% {
+    z-index: 7;
+    transform: translate3d(0, -18px, 0) rotate(-0.25deg) scale(0.74);
+  }
+
+  31%,
+  36% {
+    z-index: 7;
+    transform: translate3d(0, -24px, 0) rotate(0deg) scale(0.58);
+  }
+
+  43% {
+    z-index: 5;
+    transform: translate3d(0, 42px, 0) rotate(0deg) scale(0.58);
+  }
+
+  53% {
+    z-index: 5;
+    transform: translate3d(0, 116px, 0) rotate(0deg) scale(0.58);
+  }
+
+  63% {
+    z-index: 5;
+    transform: translate3d(0, 184px, 0) rotate(0deg) scale(0.58);
+  }
+
+  72% {
+    z-index: 5;
+    transform: translate3d(0, 244px, 0) rotate(0deg) scale(0.58);
+  }
+
+  78% {
+    z-index: 2;
+    transform: translate3d(0, 292px, 0) rotate(0deg) scale(0.58);
+  }
+
+  100% {
+    z-index: 2;
+    transform: translate3d(0, 292px, 0) rotate(0deg) scale(0.58);
+  }
+}
+
+@keyframes envelope-frame-closed {
+  0%,
+  15% {
+    opacity: 0;
+  }
+
+  16%,
+  28% {
+    opacity: 1;
+  }
+
+  29%,
+  82% {
+    opacity: 0;
+  }
+
+  83%,
+  94% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes envelope-frame-open {
+  0%,
+  28% {
+    opacity: 0;
+  }
+
+  29%,
+  79% {
+    opacity: 1;
+  }
+
+  80%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes envelope-frame-half {
+  0%,
+  79% {
+    opacity: 0;
+  }
+
+  80%,
+  82% {
+    opacity: 1;
+  }
+
+  83%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes envelope-mailing-body {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translate3d(-50%, 360px, 0) rotate(0.6deg);
+  }
+
+  16% {
+    opacity: 1;
+    transform: translate3d(-50%, 238px, 0) rotate(-0.4deg);
+  }
+
+  21% {
+    opacity: 1;
+    transform: translate3d(-50%, 132px, 0) rotate(0.8deg);
+  }
+
+  28% {
+    opacity: 1;
+    transform: translate3d(-50%, 42px, 0) rotate(-0.2deg);
+  }
+
+  90% {
+    opacity: 1;
+    transform: translate3d(-50%, 42px, 0) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(-50%, 42px, 0) rotate(0deg);
+  }
+}
+
+@keyframes envelope-mouth-open {
+  0%,
+  28% {
+    opacity: 0;
+  }
+
+  29%,
+  79% {
+    opacity: 1;
+  }
+
+  84%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes envelope-front-mask {
+  0%,
+  38% {
+    opacity: 0;
+  }
+
+  39%,
+  81% {
+    opacity: 0.86;
+  }
+
+  85%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes envelope-flap-mailing {
+  0%,
+  76%,
+  100% {
+    transform: rotateX(0deg) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes mailing-stamp-arrives {
+  0%,
+  84% {
+    opacity: 0;
+    transform: rotate(-8deg) scale(1.06);
+  }
+
+  87% {
+    opacity: 0.18;
+    transform: rotate(-6deg) scale(0.98);
+  }
+
+  90%,
+  94% {
+    opacity: 0.42;
+    transform: rotate(-7deg) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotate(-7deg) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .mailing-sequence {
+    width: calc(100vw - 34px);
+  }
+
+  .mailing-sequence.is-active {
+    min-height: 520px;
+  }
+
+  .mailing-envelope {
+    top: calc(50% + 132px);
+    width: calc(100vw - 58px);
+    max-width: 430px;
+    height: 226px;
+  }
+
+  .mailing-envelope-back {
+    height: 164px;
+  }
+
+  .mailing-envelope-flap {
+    height: 106px;
+  }
+
+  .mailing-envelope-front {
+    top: 92px;
+    height: 132px;
+  }
+
+  .receipt-postcard {
+    grid-template-columns: 1fr;
+    width: calc(100vw - 34px);
+    min-height: 0;
+    padding: 28px;
+  }
+
+  .receipt-postcard-divider {
+    display: none;
+  }
+
+  .receipt-postcard-annotation {
+    min-height: 132px;
+  }
+
+  .receipt-afterglow-label {
+    margin-top: 30px !important;
+  }
+
+  .receipt-date {
+    position: static;
+    margin-top: 24px !important;
+  }
+
+  .receipt-top-actions {
+    margin-bottom: 18px;
+  }
+}
+
+/* Route Deck motion: the anchor stays present while the next small pile is opened. */
+.back-deck-scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 1040px);
+  min-height: min(760px, calc(100vh - 64px));
+}
+
+.back-deck-anchor-backdrop {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: min(920px, calc(100vw - 48px));
+  min-height: 438px;
+  pointer-events: none;
+  opacity: 0.38;
+  filter: saturate(0.78) brightness(0.96);
+  transform: translate(-50%, -45%) scale(0.94) rotate(-0.65deg);
+  transform-origin: 50% 58%;
+  animation: route-anchor-recedes 460ms cubic-bezier(0.22, 0.78, 0.28, 1) both;
+}
+
+.back-deck-anchor-backdrop .receipt-postcard-annotation,
+.back-deck-anchor-backdrop .receipt-postcard-raw {
+  min-height: 0;
+}
+
+.back-deck-anchor-backdrop p,
+.back-deck-anchor-backdrop blockquote {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.back-deck-stage {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  width: min(100%, 960px);
+  min-height: 690px;
+  padding: 34px 0 24px;
+  animation: route-deck-arrives 460ms cubic-bezier(0.22, 0.78, 0.28, 1) both;
+}
+
+.back-deck-origin {
+  align-self: start;
+  margin: 0 0 12px;
+  color: rgba(55, 49, 43, 0.48);
+  font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 12px;
+}
+
+.back-deck-stack {
+  position: absolute;
+  z-index: 1;
+  top: 72px;
+  left: 50%;
+  width: min(920px, calc(100vw - 48px));
+  min-height: 438px;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.back-deck-back-card {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+  padding: clamp(32px, 4vw, 48px);
+  overflow: hidden;
+  border: 1px solid rgba(76, 65, 53, 0.14);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.66), transparent 38%),
+    repeating-linear-gradient(7deg, rgba(64, 56, 48, 0.02) 0 1px, transparent 1px 9px),
+    #f8f5ed;
+  box-shadow: 0 8px 22px rgba(72, 62, 51, 0.08);
+  color: rgba(66, 57, 48, var(--stack-opacity));
+  opacity: var(--stack-opacity);
+  transform: translate(var(--stack-x), var(--stack-y)) rotate(var(--stack-rotate)) scale(var(--stack-scale));
+  transform-origin: 50% 60%;
+  animation: route-back-card-arrives 420ms cubic-bezier(0.22, 0.78, 0.28, 1) both;
+}
+
+.back-deck-back-card span {
+  max-width: 38%;
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.back-deck-back-card:nth-child(2) { animation-delay: 55ms; }
+.back-deck-back-card:nth-child(3) { animation-delay: 105ms; }
+.back-deck-back-card:nth-child(4) { animation-delay: 150ms; }
+
+.back-deck-postcard {
+  position: relative;
+  z-index: 5;
+  margin-top: 24px;
+  touch-action: pan-y;
+  user-select: none;
+  will-change: transform, opacity;
+  transform: translate3d(var(--deck-drag-x, 0), var(--deck-drag-y, 0), 0) rotate(var(--deck-drag-rotate, 0));
+  transition: transform 280ms cubic-bezier(0.22, 0.78, 0.28, 1), box-shadow 220ms ease, filter 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .back-deck-postcard:hover {
+    box-shadow: 0 29px 54px rgba(58, 49, 40, 0.2), 0 7px 16px rgba(58, 49, 40, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+    translate: 0 -3px;
+  }
+}
+
+.back-deck-postcard.is-leaving-next { animation: route-card-turns-next 280ms cubic-bezier(0.4, 0, 0.8, 0.55) both; }
+.back-deck-postcard.is-leaving-previous { animation: route-card-turns-previous 280ms cubic-bezier(0.4, 0, 0.8, 0.55) both; }
+.back-deck-postcard.enters-from-next { animation: route-card-lifts-forward 360ms cubic-bezier(0.18, 0.9, 0.28, 1) both; }
+.back-deck-postcard.enters-from-previous { animation: route-card-returns-forward 360ms cubic-bezier(0.18, 0.9, 0.28, 1) both; }
+
+.back-deck-actions,
+.back-deck-back,
+.back-note-composer,
+.back-deck-end,
+.back-deck-stage > .back-card-switcher,
+.back-deck-stage > .back-card-notice {
+  position: relative;
+  z-index: 7;
+}
+
+.back-deck-actions {
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.back-deck-actions button,
+.back-deck-back,
+.back-note-composer button,
+.back-deck-end button {
+  border: 0;
+  background: transparent;
+  color: rgba(74, 89, 107, 0.8);
+  font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif;
+  font-size: 13px;
+  padding: 4px 6px;
+}
+
+.back-deck-actions button + button { color: rgba(55, 49, 43, 0.54); }
+.back-deck-back { margin-top: 8px; }
+
+.back-note-composer {
+  display: grid;
+  gap: 9px;
+  width: min(520px, 100%);
+  margin-top: 6px;
+  padding: 16px 18px;
+  border-top: 1px solid rgba(81, 70, 57, 0.16);
+  color: rgba(55, 49, 43, 0.6);
+  background: rgba(251, 250, 245, 0.58);
+  animation: route-note-attaches 260ms ease-out both;
+}
+
+.back-note-composer span { font-size: 12px; }
+.back-note-composer textarea { min-height: 64px; border: 0; border-bottom: 1px solid rgba(81, 70, 57, 0.18); outline: 0; background: transparent; color: rgba(39, 35, 31, 0.8); resize: vertical; }
+.back-note-composer div { text-align: right; }
+
+.back-deck-end {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: min(520px, 100%);
+  margin-top: 98px;
+  padding: 46px 34px;
+  border: 1px solid rgba(81, 70, 57, 0.17);
+  background: rgba(251, 250, 245, 0.8);
+  color: rgba(55, 49, 43, 0.68);
+  text-align: center;
+  animation: route-end-card-arrives 360ms cubic-bezier(0.22, 0.78, 0.28, 1) both;
+}
+
+.back-deck-end p { margin: 0; font-size: 18px; }
+.back-deck-end span { font-size: 13px; line-height: 1.6; }
+
+.back-deck-scene.is-leaving .back-deck-stage {
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+  transition: opacity 260ms ease, transform 260ms cubic-bezier(0.4, 0, 0.8, 0.55);
+}
+
+.back-deck-scene.is-leaving .back-deck-anchor-backdrop {
+  opacity: 0.72;
+  transform: translate(-50%, -45%) scale(0.985) rotate(-0.2deg);
+  transition: opacity 260ms ease, transform 260ms cubic-bezier(0.22, 0.78, 0.28, 1);
+}
+
+.back-reading-focus,
+.back-image-viewer,
+.back-route-switch {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.back-focus-backdrop,
+.back-image-viewer > button {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(42, 38, 33, 0.38);
+}
+
+.back-reading-focus > article,
+.back-route-switch {
+  animation: route-focus-arrives 260ms cubic-bezier(0.22, 0.78, 0.28, 1) both;
+}
+
+.back-reading-focus > article {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 18px;
+  width: min(720px, 92vw);
+  max-height: min(800px, calc(100vh - 44px));
+  overflow: auto;
+  padding: clamp(30px, 5vw, 54px);
+  background: #fbfaf5;
+  box-shadow: 0 26px 68px rgba(38, 34, 28, 0.24);
+  color: rgba(42, 38, 33, 0.78);
+}
+
+.back-reading-focus > article > span { color: rgba(75, 99, 123, 0.72); font-size: 12px; }
+.back-reading-focus > article blockquote { margin: 0; font-size: clamp(18px, 2.3vw, 25px); line-height: 1.8; white-space: pre-wrap; }
+.back-reading-focus > article p { margin: 0; line-height: 1.8; }
+.back-focus-close { justify-self: end; border: 0; background: transparent; color: rgba(75, 99, 123, 0.8); }
+.back-focus-image { border: 0; background: transparent; padding: 0; }
+.back-focus-image img { display: block; width: 100%; max-height: 280px; object-fit: cover; }
+
+.back-image-viewer > img { position: relative; z-index: 1; display: block; max-width: min(920px, 92vw); max-height: calc(100vh - 44px); object-fit: contain; box-shadow: 0 26px 68px rgba(38, 34, 28, 0.28); }
+
+.back-route-switch { align-content: center; z-index: 35; }
+.back-route-switch::before { content: ""; position: absolute; inset: 0; background: rgba(42, 38, 33, 0.32); }
+.back-route-switch > * { position: relative; z-index: 1; }
+.back-route-switch { gap: 10px; width: min(390px, calc(100vw - 44px)); height: fit-content; margin: auto; padding: 30px; background: #fbfaf5; box-shadow: 0 22px 56px rgba(38, 34, 28, 0.22); color: rgba(42, 38, 33, 0.75); }
+.back-route-switch p { margin: 0 0 6px; }
+.back-route-switch span { font-size: 13px; }
+.back-route-switch div { display: flex; gap: 16px; margin-top: 12px; }
+.back-route-switch button { border: 0; background: transparent; color: rgba(75, 99, 123, 0.86); padding: 4px 0; }
+
+@keyframes route-anchor-recedes {
+  from { opacity: 0.78; transform: translate(-50%, -42%) scale(1) rotate(0); }
+  to { opacity: 0.38; transform: translate(-50%, -45%) scale(0.94) rotate(-0.65deg); }
+}
+
+@keyframes route-deck-arrives {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes route-back-card-arrives {
+  from { opacity: 0; transform: translate(0, 4px) rotate(0) scale(0.99); }
+  to { opacity: var(--stack-opacity); transform: translate(var(--stack-x), var(--stack-y)) rotate(var(--stack-rotate)) scale(var(--stack-scale)); }
+}
+
+@keyframes route-card-turns-next {
+  to { opacity: 0; transform: translate3d(-76px, 8px, 0) rotate(-2.1deg); }
+}
+
+@keyframes route-card-turns-previous {
+  to { opacity: 0; transform: translate3d(70px, 10px, 0) rotate(1.9deg); }
+}
+
+@keyframes route-card-lifts-forward {
+  from { opacity: 0.8; transform: translate3d(10px, 12px, 0) rotate(-0.8deg) scale(0.99); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0) scale(1); }
+}
+
+@keyframes route-card-returns-forward {
+  from { opacity: 0.8; transform: translate3d(-12px, 12px, 0) rotate(0.85deg) scale(0.99); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0) scale(1); }
+}
+
+@keyframes route-note-attaches {
+  from { opacity: 0; transform: translateY(-7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes route-end-card-arrives {
+  from { opacity: 0; transform: translateY(12px) rotate(-0.35deg); }
+  to { opacity: 1; transform: translateY(0) rotate(-0.35deg); }
+}
+
+@keyframes route-focus-arrives {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 640px) {
+  .back-deck-scene { min-height: calc(100vh - 34px); }
+  .back-deck-anchor-backdrop,
+  .back-deck-stack { width: calc(100vw - 34px); }
+  .back-deck-anchor-backdrop { top: 48%; transform: translate(-50%, -44%) scale(0.93) rotate(-0.5deg); }
+  .back-deck-stage { min-height: calc(100vh - 34px); padding-top: 12px; }
+  .back-deck-stack { top: 50px; min-height: 0; height: 560px; }
+  .back-deck-postcard { margin-top: 14px; }
+  .back-deck-back-card { min-height: 0; padding: 28px; }
+  .back-deck-actions { align-items: center; flex-direction: row; justify-content: center; }
+  .back-deck-end { margin-top: 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-deck-anchor-backdrop,
+  .back-deck-stage,
+  .back-deck-back-card,
+  .back-deck-postcard,
+  .back-deck-end,
+  .back-note-composer,
+  .back-reading-focus > article { animation: none !important; transition-duration: 1ms !important; }
+}
+
+/* These are later in the file than the Receipt base animation on purpose. */
+.receipt-postcard.back-anchor-postcard,
+.receipt-postcard.back-deck-postcard {
+  width: min(920px, calc(100vw - 48px));
+  animation: none;
+}
+
+/* Back preview reuses the original record slip rather than a postcard. */
+.back-preview-card {
+  width: min(560px, calc(100vw - 56px));
+  min-height: 390px;
+  padding: 46px 42px 38px;
+  border: 0;
+  color: rgba(37, 31, 25, 0.76);
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.62), transparent 38%),
+    repeating-linear-gradient(7deg, rgba(95, 82, 66, 0.035) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(92deg, rgba(95, 82, 66, 0.024) 0 1px, transparent 1px 13px),
+    #f8f5ec;
+  box-shadow:
+    0 28px 48px rgba(70, 62, 52, 0.18),
+    0 7px 16px rgba(70, 62, 52, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  clip-path: polygon(1.4% 4.5%, 8.5% 2.2%, 17% 3.6%, 25% 1.2%, 36% 3.1%, 48% 1.7%, 61% 3.8%, 72% 1.5%, 84% 3.4%, 98.2% 2.3%, 96.5% 14%, 98.8% 27%, 96.9% 41%, 98.4% 54%, 96.2% 69%, 98% 84%, 95.8% 97%, 83% 95.5%, 71% 98.5%, 58% 96.7%, 44% 98.3%, 32% 96.4%, 21% 98.2%, 10% 96.1%, 2.2% 98%, 3.8% 84%, 1.6% 70%, 3.2% 57%, 1.1% 43%, 3.4% 29%, 1.8% 16%);
+  transform: none;
+}
+
+.back-preview-card:hover { transform: translateY(-3px); }
+.back-preview-main { display: grid; align-content: start; gap: 14px; min-height: 304px; width: 100%; padding: 0; border: 0; color: inherit; background: transparent; font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif; text-align: left; }
+.back-preview-main span { color: rgba(37, 31, 25, 0.42); font-size: 12px; }
+.back-preview-main strong { color: inherit; font: inherit; font-size: 15px; font-weight: 400; }
+.back-preview-main blockquote { margin: 0; color: inherit; font: inherit; font-size: 15px; line-height: 1.76; white-space: pre-wrap; }
+.back-preview-actions { margin-top: 18px; }
+.back-preview-actions button { padding: 2px 4px; border: 0; color: rgba(166, 48, 42, 0.58); background: transparent; font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif; font-size: 15px; }
+
+.back-empty-stamp { width: 86px; height: 68px; padding: 0; border: 1px solid rgba(166, 48, 42, 0.42); color: rgba(37, 31, 25, 0.58); transform: none; }
+.back-anchor-close { padding: 2px 0; border: 0; color: #6580a0; background: transparent; font: inherit; cursor: pointer; }
+.back-lookback-question { margin: 0; color: #6580a0; font-size: 0.88rem; line-height: 1.7; }
+.back-afterglow-toggle { display: none; }
+
+.back-anchor-raw { align-content: start; min-height: 0; }
+.back-raw-text.ruled-text-area { display: block; width: 100%; min-height: 0; padding: 0 2px; color: rgba(33, 29, 25, 0.78); background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--ruled-line) - 1px), rgba(166, 48, 42, 0.24) calc(var(--ruled-line) - 1px), rgba(166, 48, 42, 0.24) var(--ruled-line)); }
+.back-raw-text.ruled-text-area blockquote { margin: 0; color: inherit; font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif; font-size: 15px; line-height: var(--ruled-line); white-space: pre-wrap; }
+
+.back-deck-annotation { align-items: stretch; }
+.back-deck-afterglow { align-self: start; max-width: 82%; margin: 0; color: rgba(37, 31, 25, 0.76); font-family: "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif; font-size: clamp(1.3rem, 2.7vw, 1.75rem); line-height: 1.65; white-space: pre-line; }
+.back-inline-note { display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(86, 93, 100, 0.18); }
+.back-inline-note span { color: #6580a0; font-size: 12px; }
+.back-inline-note textarea, .back-inline-note input { width: 100%; border: 0; border-bottom: 1px solid rgba(86, 93, 100, 0.22); outline: 0; background: transparent; color: rgba(37, 31, 25, 0.76); font: inherit; }
+.back-inline-note textarea { min-height: 72px; resize: vertical; }
+.back-inline-note input { padding: 6px 0; font-size: 12px; }
+.back-deck-postcard .back-anchor-raw { grid-template-rows: 80px auto auto 28px; align-content: start; }
+.back-inline-note { width: 100%; padding: 0 2px; border: 0; }
+.back-inline-note textarea { min-height: calc(var(--ruled-line) * 2); line-height: var(--ruled-line); }
+.back-note-list p { display: grid; gap: 4px; margin: 0; color: rgba(37, 31, 25, 0.76); font-size: 14px; line-height: 1.6; }
+.back-note-list span { color: rgba(37, 31, 25, 0.44); font-size: 11px; }
+.back-deck-controls { position: relative; z-index: 7; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px 18px; margin-top: 16px; }
+.back-deck-controls button { border: 0; background: transparent; color: rgba(74, 89, 107, 0.8); cursor: pointer; font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif; font-size: 13px; padding: 4px 6px; }
+.back-deck-controls .back-card-switcher { gap: 6px; }
+.record-slip-stage.is-instant .record-slip,
+.record-slip-stage.is-instant .record-slip-top-actions,
+.record-slip-stage.is-instant .record-leave-button { animation: none; opacity: 1; }
+
+.demo-guide { max-width: min(560px, calc(100vw - 56px)); margin: 0; color: rgba(75, 99, 123, 0.84); font-family: "Courier Prime", "Courier New", "LXGW WenKai Screen", "Noto Serif SC", "Songti SC", serif; font-size: 12px; line-height: 1.6; text-align: center; }
+.receipt-demo-guide { position: fixed; z-index: 12; right: 24px; bottom: 18px; max-width: min(360px, calc(100vw - 48px)); text-align: right; }
+.back-demo-guide { margin-bottom: 12px; }

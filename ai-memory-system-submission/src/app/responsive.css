@@ -1,0 +1,96 @@
+@media (max-width: 1100px) {
+  .trace-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .trace-capture {
+    position: static;
+  }
+
+  .memory-unit-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .memory-source-strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .treasury-layout,
+  .return-panel,
+  .treasury-header,
+  .analyzer-playground {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .memory-detail {
+    position: static;
+  }
+
+  .analyzer-input-panel {
+    position: static;
+  }
+
+  .treasury-space {
+    grid-template-columns: minmax(0, 1fr);
+    overflow: visible;
+  }
+
+  .treasury-space-field {
+    min-height: 560px;
+  }
+
+  .treasury-entry-panel {
+    min-height: auto;
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .treasury-detail {
+    position: static;
+    width: 100%;
+  }
+
+  .time-memory-card {
+    width: min(78vw, 430px);
+  }
+
+  .time-detail-copy {
+    left: 20px;
+    right: 20px;
+    bottom: 24px;
+  }
+}
+
+@media (max-width: 920px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .top-nav {
+    align-items: stretch;
+    gap: 18px;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .mode-switch {
+    width: 100%;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .analyzer-candidate-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .receipt-option-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

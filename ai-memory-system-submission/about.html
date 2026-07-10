@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Memory System — 项目说明</title>
+    <style>
+      :root { color: #292724; background: #f4f1ea; font-family: "Noto Serif SC", "Songti SC", serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: radial-gradient(circle at 50% 0, #fffdf8 0, #f4f1ea 52%, #e8e2d8 100%); }
+      main { width: min(880px, calc(100vw - 40px)); margin: 0 auto; padding: 72px 0 96px; }
+      .eyebrow { color: #71829a; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+      h1 { max-width: 700px; margin: 18px 0; font-size: clamp(38px, 7vw, 68px); font-weight: 500; letter-spacing: -.06em; line-height: 1.1; }
+      h2 { margin: 56px 0 16px; font-size: 25px; font-weight: 500; }
+      p, li { font-size: 17px; line-height: 1.9; }
+      .lead { max-width: 670px; color: #5c574f; font-size: 20px; }
+      .quote { margin: 38px 0; padding: 24px 28px; border-left: 2px solid #9b6756; background: rgba(255,255,255,.48); color: #3b3732; font-size: 22px; line-height: 1.7; }
+      .card { margin-top: 18px; padding: 26px 28px; border: 1px solid rgba(82, 75, 65, .16); background: rgba(255,255,255,.55); box-shadow: 0 12px 34px rgba(64, 57, 48, .06); }
+      .card h3 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
+      .card p { margin: 0; color: #605b54; }
+      ol { padding-left: 24px; }
+      .boundary { color: #705a4c; }
+      a.button { display: inline-block; margin-top: 30px; padding: 13px 20px; color: white; background: #34312d; border-radius: 999px; text-decoration: none; font-size: 15px; }
+      .footnote { margin-top: 44px; color: #777068; font-size: 13px; }
+      @media (max-width: 600px) { main { padding-top: 48px; } p, li { font-size: 16px; } .lead { font-size: 18px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">AI MEMORY SYSTEM / SUBMISSION PROTOTYPE</p>
+      <h1>不是保存事情，<br />而是留住事情之后的余波。</h1>
+      <p class="lead">这是一个私人记忆系统：当你还说不清楚、但不想弄丢某种感觉时，先留下几个词；未来再由 Back 轻轻把你带回去。</p>
+      <p class="quote">“趁余波还在，先留下几个词。<br />未来的你，再回来认领。”</p>
+
+      <h2>这次提交最想验证什么</h2>
+      <p>不是“AI 能不能把日记写得更漂亮”，而是：人在很累、很空、还没想清楚的时候，能否不整理、不分类，只留下原话；而“之后再说”能否在未来成为一次回望，而不是一个待办。</p>
+
+      <h2>三个亮点</h2>
+      <section class="card"><h3>01 · 原话优先</h3><p>系统不把用户的感受压缩成标签或总结。原话始终在卡片上，解释权留给未来的用户自己。</p></section>
+      <section class="card"><h3>02 · “之后再说”是有效状态</h3><p>暂放不是取消，也不是未完成任务。它让感受先被保存，等未来有力气时再回来命名。</p></section>
+      <section class="card"><h3>03 · Back 不是搜索</h3><p>它不问“你要找什么”，而是把一张曾经的卡递回来，让人重新碰到当时的 Moment、World、Presence 或 Self。</p></section>
+
+      <h2>请这样体验（约 2 分钟）</h2>
+      <ol>
+        <li>首页已经预置一段“卡在 API 上的下午”。先读它，点击<strong>「留下」</strong>。</li>
+        <li>看到回执后，不编辑分类，点击<strong>「先放着（继续体验）」</strong>。</li>
+        <li>进入 Back，点击<strong>「收件」</strong>，再点击<strong>「回去看看」</strong>。</li>
+        <li>选择<strong>「回到一个曾经的我」</strong>。</li>
+        <li>点击<strong>「补一句」</strong>，写下你现在回看这段话时想补的内容，再点击<strong>「提交」</strong>。</li>
+      </ol>
+      <a class="button" href="/">开始体验 →</a>
+
+      <h2>这版还没有做到什么</h2>
+      <p class="boundary">这是一个受控的概念验证，不是完整产品。当前体验使用预置的高质量样本和本地 mock 规则；真实 LLM 接入仍停留在独立训练台，尚未进入这条产品主流程。卡片仅保存于当前浏览器，刷新/换设备不会形成真实的长期个人记忆库。</p>
+      <p class="boundary">图片、语音、搜索/管理、真实多用户测试、完整的自动回访机制也都还未完成。当前最重要的不是功能齐全，而是验证：这条“留下 → 暂放 → 回去 → 补一句”的路径，是否真的让人回去一点。</p>
+
+      <h2>接下来</h2>
+      <p>先收集对这条核心路径的评价；再接入真实模型和持久化，让用户自己的低能量输入也能被安全地接住、延后确认，并在未来回到他们手里。</p>
+      <p class="footnote">请把这里当作一段可体验的产品片段，而非完整产品承诺。</p>
+    </main>
+  </body>
+</html>
